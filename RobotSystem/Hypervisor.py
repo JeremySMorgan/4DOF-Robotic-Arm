@@ -10,17 +10,17 @@ import threading
 import os
 import datetime
 
-
 class Hypervisor:
 
     def __init__(self):
 
+
+        self.pwm = None
         if RobotUtils.PWM_ENABLED:
             if RobotUtils.RUNNING_ON_RPI:
                 self.pwm = PWM()
                 self.pwm.setPWMFreq(RobotUtils.SERVO_FREQUENCY)
-        self.pwm = None
-
+        
         self.current_data = None
 
         if RobotUtils.MULTI_THREADING_ENABLE:
@@ -67,6 +67,7 @@ class Hypervisor:
         base_angle = motor_data['base_val']
         min_angle = motor_data['min_angle']
         max_angle = motor_data['max_angle']
+        max_min_swapped = bool(motor_data['min_max_swapped'])
 
         motor = Motor(
             RobotUtils,
@@ -75,6 +76,7 @@ class Hypervisor:
             max_angle,
             base_angle,
             name,
+            max_min_swapped,
             self.pwm,
             )
 
@@ -99,7 +101,29 @@ class Hypervisor:
         for i in self.motors:
             i.move_to_base_position()
 
-    def set_motor_to_min(self, motor_num):
+
+
+    def set_motor_to_min_pwm(self,motor_num):
+        self.MotionController.set_motor_to_max_pwm(motor_num)
+
+        status_str = 'Set motor ' + self.motors[motor_num - 1].name \
+            + ' to max pwm'
+
+        RobotUtils.ColorPrinter(self.__class__.__name__, status_str,
+                                'OKGREEN')
+
+
+    def set_motor_to_max_pwm(self,motor_num):
+        self.MotionController.set_motor_to_max_pwm(motor_num)
+
+        status_str = 'Set motor ' + self.motors[motor_num - 1].name \
+            + ' to max pwm'
+
+        RobotUtils.ColorPrinter(self.__class__.__name__, status_str,
+                                'OKGREEN')
+
+
+    def set_motor_to_min_angle(self, motor_num):
         self.motors[motor_num - 1].set_minimum_angle()
 
         status_str = 'Set motor ' + self.motors[motor_num - 1].name \
@@ -108,7 +132,7 @@ class Hypervisor:
         RobotUtils.ColorPrinter(self.__class__.__name__, status_str,
                                 'OKGREEN')
 
-    def set_motor_to_max(self, motor_num):
+    def set_motor_to_max_angle(self, motor_num):
         self.motors[motor_num - 1].set_maximum_angle()
 
         status_str = 'Set motor ' + self.motors[motor_num - 1].name \
@@ -117,7 +141,10 @@ class Hypervisor:
         RobotUtils.ColorPrinter(self.__class__.__name__, status_str,
                                 'OKGREEN')
 
-    def set_motor_to_abs_angle(self, motor_num, angle):
+    def set_motor_to_angle(self, motor_num, angle):
+        motor = self.motors[motor_num - 1]
+        debug_str = 'Set motor ' + motor.name + ' to angle: '+ str(angle)
+        RobotUtils.ColorPrinter(self.__class__.__name__,debug_str, 'OKGREEN')
 
         self.MotionController.set_motor_to_abs_angle(motor_num, angle)
 

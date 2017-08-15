@@ -33,16 +33,16 @@ class MotionController(object):
         self.j3.move_to_base_position()
         self.j4.move_to_base_position()
 
-        def set_motor_to_abs_angle(self, motor_num, angle):
-            motor = self.motors[motor_num - 1]
-            motor.move_to_abs_angle(angle)
-
-            debug_str = 'Set motor ' + motor.name + ' to angle: ' \
-                + str(angle)
-
-        self.RobotUtils.ColorPrinter(self.__class__.__name__,
-                debug_str, 'OKBLUE')
-
-
-
-            
+    def set_motor_to_abs_angle(self, motor_num, angle):
+        motor = self.motors[motor_num - 1]
+        motor.move_to_abs_angle(angle)
+        
+    def set_motor_to_min_pwm(self,motor_num):
+        motor = self.motors[motor_num - 1]
+        motor.set_minimum_pwm()
+        
+    def set_motor_to_max_pwm(self,motor_num):
+        motor = self.motors[motor_num - 1]
+        motor.set_maximum_pwm
+     
+        

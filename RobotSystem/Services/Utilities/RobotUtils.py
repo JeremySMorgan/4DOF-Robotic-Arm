@@ -1,3 +1,4 @@
+import datetime
 
 class RobotUtils(object):
 
@@ -11,10 +12,10 @@ class RobotUtils(object):
     SERVO_FREQUENCY    = 50                     # 50 Hz creates a 20 ms period, which servos operate with
     DATA_FILE         = "RobotSystem/Services/MotorCalibration.json"     # path to data file
 
-    MOTOR_DEBUG     = False                    # Debug Motors
-    PWM_ENABLED        = True                    # Dictates whether to write to pwm
-    MULTI_THREADING_ENABLE = False
-    RUNNING_ON_RPI    = False
+    MOTOR_DEBUG     		= False                    # Debug Motors
+    PWM_ENABLED     	   	= True                    # Dictates whether to write to pwm
+    MULTI_THREADING_ENABLE 	= False
+    RUNNING_ON_RPI    		= True
 
     AGENDA_UPDATE_SPEED = .1                # Time delay between polls of new agenda
 
