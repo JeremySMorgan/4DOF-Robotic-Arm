@@ -1,34 +1,34 @@
 {
-	"motors":[
-		{
-			"name": "j1",
-			"base_val": 180,
-			"min_angle": 135,
-			"max_angle":300,
-			"min_max_swapped":true,
-			"pin":0
-		},
-		{
-			"name": "j2",
-			"base_val": 90,
-			"min_angle": 0,
-			"max_angle":180,
-			"pin":1
-		},
-		{
-			"name": "j3",
-			"base_val": 90,
-			"min_angle": 0,
-			"max_angle":180,
-			"pin":2
-		},
-		{
-			"name": "j4",
-			"base_val": 90,
-			"min_angle": 0,
-			"max_angle":180,
-			"pin":3
-		}
-	]
+    "motors":[
+        {
+            "name": "j1",
+            "base_val": 180,
+            "min_angle": 135,
+            "max_angle":300,
+            "min_max_swapped":true,
+            "pin":0
+        },
+        {
+            "name": "j2",
+            "base_val": 90,
+            "min_angle": 0,
+            "max_angle":180,
+            "pin":1
+        },
+        {
+            "name": "j3",
+            "base_val": 90,
+            "min_angle": 0,
+            "max_angle":180,
+            "pin":2
+        },
+        {
+            "name": "j4",
+            "base_val": 90,
+            "min_angle": 0,
+            "max_angle":180,
+            "pin":3
+        }
+    ]
 
 }

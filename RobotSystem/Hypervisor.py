@@ -16,10 +16,10 @@ class Hypervisor:
     def __init__(self):
 
         if RobotUtils.PWM_ENABLED:
-            self.pwm = PWM()
-            self.pwm.setPWMFreq(RobotUtils.SERVO_FREQUENCY)
-        else:
-            self.pwm = None
+            if RobotUtils.RUNNING_ON_RPI:
+                self.pwm = PWM()
+                self.pwm.setPWMFreq(RobotUtils.SERVO_FREQUENCY)
+        self.pwm = None
 
         self.current_data = None
 
@@ -126,4 +126,4 @@ class Hypervisor:
 
 
 
-			
+            

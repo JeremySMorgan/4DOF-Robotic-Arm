@@ -50,7 +50,7 @@ var data = {
   "controls": {
     "poll_time": 50,
     "leastSignificantValidChange": 4,
-	"autoSend":false,
+    "autoSend":false,
     "lastSendTime": -1,
     "keyboard": {
 

@@ -1,4 +1,3 @@
-import sys, math, numpy
 from RobotSystem.Services.Utilities.RobotUtils import RobotUtils
 
 # MotionPlanner provides target values given a desired end state
@@ -6,15 +5,15 @@ from RobotSystem.Services.Utilities.RobotUtils import RobotUtils
 # math.cos(X) - return the cosine of x radians
 # math.cos(math.radians(X)) - return the cosine of x radians
 
-# 						_ _ _
-#					 /  	  \
-#	 			  /    / ---   \
-#	 R1 /      /    /        \  \
-# 		   	 /    /   theta2  \  \   \ R2
-#		   /   /               \  \
+#                         _ _ _
+#                     /        \
+#                   /    / ---   \
+#     R1 /      /    /        \  \
+#                 /    /   theta2  \  \   \ R2
+#           /   /               \  \
 #        /    /                \  \
-#	    (   )                    \  \
-#	__ |   /  theta1	    	  |__|
+#        (   )                    \  \
+#    __ |   /  theta1              |__|
 #  ____   |
 #
 
