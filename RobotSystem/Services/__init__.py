@@ -1,6 +1,6 @@
 from Utilities.RobotUtils import RobotUtils
 
-if RobotUtils.LIVE_TESTING:
+if RobotUtils.PWM_ENABLED:
     from I2CDriver.I2C import Adafruit_I2C
     from PWMDriver.pwm import PWM
 

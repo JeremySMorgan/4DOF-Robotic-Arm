@@ -1,1 +1,6 @@
-## 4DOF Robot Arm
+# 4DOF Robot Arm
+<hr>
+
+
+
+## Motor Values

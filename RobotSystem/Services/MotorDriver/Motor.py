@@ -1,108 +1,55 @@
-from RobotSystem.Services.Utilities.RobotUtils import RobotUtils
 import time
 import math
 
 class Motor(object):
 
-	'''* servoMin == 125, servoMax == 525ms *'''
-	'''* minVal>=0, maxVal<=100 *'''
-	def __init__(self, horiz_value, pinNumber, minVal, maxVal, offset_to_center,name, pwm):
+	def __init__(self, RobotUtils, pinNumber, minAngle, maxAngle, centerValue, name, pwm):
 
 		if RobotUtils.MOTOR_DEBUG:
-			print "Motor Init. name: ",name,"	| minValue: ",minVal,"	| maxValue: ",maxVal,"	| centerVal: ",centerVal
+			debug_str = "Motor Init. name: ",name,"	| minAngle: ",minAngle,"	| maxAngle: ",maxAngle,"	| baseValue: ",centerValue
+			RobotUtils.ColorPrinter(name, debug_str, 'OKBLUE')
+
+		self.RobotUtilities = RobotUtils
 
 		self.pin_number = pinNumber
 
-		self.servo_min = RobotUtils.SERVO_MIN
-		self.servo_max = RobotUtils.SERVO_MAX
+		self.min_pwm = self.RobotUtilities.SERVO_MIN
+		self.max_pwm = self.RobotUtilities.SERVO_MAX
 
-		self.min = minVal
-		self.max = maxVal
+		self.min_angle = minAngle
+		self.max_angle = maxAngle
 
-		self.horiz_value = horiz_value
-		self.center_value = horiz_value + offset_to_center
-		self.value = self.center_value
-
+		self.base_val = centerValue
+		self.current_angle = self.base_val
 		self.name = name
-
 		self.pwm = pwm
 
+	def moveTo(self,d_angle):
+		if d_angle > self.min_angle and d_angle < self.max_angle:
+			self.value = d_angle
 
-		self.moveTo(self.center_value)
+		elif d_angle >= self.max_angle:
+			self.value = self.max_angle
+			debug_str = "Error: Desired angle of ",str(d_angle)," is greater than max_angle of ",str(self.max_angle)
+			self.RobotUtilities.ColorPrinter(self.name, debug_str, 'FAIL')
 
-	def moveToHoriz(self):
-		self.moveTo(self.horiz_value)
+		elif d_angle <= self.min_angle:
+			self.value = self.min_angle
+			debug_str = "Error: Desired angle of ",str(d_angle)," is less than min_angle of ",str(self.min_angle)
+			self.RobotUtilities.ColorPrinter(self.name, debug_str, 'FAIL')
 
-	def moveTo(self,val):
-		if val > self.min and val < self.max:
-			self.value = val
+		#def scale(OldValue, OldMin, OldMax, NewMin, NewMax):
+		scaled_value = int( self.RobotUtilities.scale( self.value, self.min_angle, self.max_angle,  self.min_pwm, self.max_pwm ))
 
-		elif val >= self.max:
-			self.value = self.max
-
-		elif val <= self.min:
-			self.value = self.min
-
-		else:
-			print "something strange is happeneing..."
-
-		scaled_value = int(RobotUtils.scale(self.value, RobotUtils.MIN_MOTOR_VALUE, RobotUtils.MAX_MOTOR_VALUE,  self.servo_min,self.servo_max))
-		if scaled_value < self.servo_min:
-			print "error: scaled_value < servo_min for: ",self.name
-
-		elif scaled_value > self.servo_max:
-			print "error: scaled_value < servo_min for: ",self.name
-
+		if scaled_value < self.min_pwm:
+			self.RobotUtilities.ColorPrinter(self.name, "Error: scaled pwm duty value < min allowable pwm", 'FAIL')
+			
+		elif scaled_value > self.max_pwm:
+			self.RobotUtilities.ColorPrinter(self.name, "Error: scaled pwm duty value > max allowable pwm", 'FAIL')
+			
 		else:
 			if self.pwm != None:
 				self.pwm.setPWM(self.pin_number, 0, scaled_value)
 
-	def moveToInT(self,val,t):
-
-		delta = self.value - val
-
-		if val > self.min and val < self.max:
-			self.value = val
-
-		elif val >= self.max:
-			self.value = self.max
-
-		elif val <= self.min:
-			self.value = self.min
-
-		else:
-			print "something strange is happeneing..."
-
-		self.moveOffSetInT(delta,t)
-
-
-	def moveOffSetInT(self,deltaVal,t):
-		for i in range(int(math.fabs(deltaVal))):
-			self.moveOffset( RobotUtils.PositiveOrNegative(deltaVal) )
-			time.sleep(t)
-
-
-	def moveOffset(self,deltaVal):
-		val = self.value + deltaVal
-
-		if val > self.min and val < self.max:
-			self.value = val
-
-		elif val >= self.max:
-			self.value = self.max
-
-		elif val <= self.min:
-			self.value = self.min
-
-		else:
-			print "ERROR, very odd indeed"
-
-		scaled_value = int(RobotUtils.scale(self.value, RobotUtils.MIN_MOTOR_VALUE, RobotUtils.MAX_MOTOR_VALUE, self.servo_min,self.servo_max))
-
-		if self.pwm != None:
-			self.pwm.setPWM(self.pin_number, 0, scaled_value)
-
-
-
-	def reset(self):
+	def move_to_base_position(self):
 		self.moveTo(self.center_value)

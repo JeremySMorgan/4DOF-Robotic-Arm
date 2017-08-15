@@ -7,50 +7,17 @@ class RobotUtils(object):
 
 	DEG_TO_RAD		= 0.0174533				# Constant to convert degrees to radians
 
-	MAX_MOTOR_VALUE = 100					# Maximum possible motor value
-	MIN_MOTOR_VALUE = 0						# Minumum possible motor value
-
-	SERVO_MIN		= 130					# Minumum tick count for duty cycle
-	SERVO_MAX		= 570 					# Maximum tick count for duty cycle
-	FREQUENCY		= 50 					# 50 Hz creates a 20 ms period, which servos operate with
+	SERVO_MIN		= 165					# Minumum tick count for duty cycle
+	SERVO_MAX		= 480 					# Maximum tick count for duty cycle
+	SERVO_FREQUENCY	= 50 					# 50 Hz creates a 20 ms period, which servos operate with
 	DATA_FILE	 	= "../ProjectPrism/RobotSystem/Services/MotorCalibration.json" 	# path to data file
 
-	LEG_DEBUG 		= False					# Debug Legs
 	MOTOR_DEBUG 	= False					# Debug Motors
-	LIVE_TESTING	= True					# Dictates whether program is executing on robot or on a development computer
-	VIDEO_STEAMING	= True					# Determines whether the computer/Pi streams live video footage
-	LASER_ENABLE 	= True					# Enables Laser
-	
-	LASER_PIN		= 17						# Which pin laser is connected to
+	PWM_ENABLED		= True					# Dictates whether to write to pwm
 	
 	AGENDA_UPDATE_SPEED = .1				# Time delay between polls of new agenda
-
-	TURN_LEFT 		= 0						# Arbitrary constants which are used to commincate moves between the hypervisor and the motion planner
-	TURN_RIGHT	 	= 1
-	FORWARD 		= 2
-	BACKWARD 		= 3
-	STOP			= 4
-	AUTONOMOUS		= 5
-	LASER_ON		= 6
-	LASER_OFF		= 7
-		
-	INVALID_DATA_ERROR = 8
-
-	HORIZONTAL_VID_PIN = 3
-	HORIZONTAL_VID_CENTER = 40
 	
-	VERTICAL_VID_PIN = 	7
-	VERTICAL_VID_CENTER = 25
-	
-	HORIZONTAL_VID_MIN_VAL = 0
-	HORIZONTAL_VID_MAX_VAL = 100
-
-	VERTICAL_VID_MIN_VAL = 0
-	VERTICAL_VID_MAX_VAL = 100
-	
-	MULTI_THREADING_ENABLE = True
-
-	
+	MULTI_THREADING_ENABLE = False
 
 	COLORS = {								# Unix codes for special priting
 		"HEADER"		: 	{"value":'\033[95m', "code":0},
@@ -63,8 +30,6 @@ class RobotUtils(object):
 		"UNDERLINE" 	: 	{"value":'\033[4m', "code":7},
 		"STANDARD"		:	{"value":'', "code":8}
 	}
-
-	MIN_MOVEMENT_THRESHOLD = 5
 
 	# takes any numer and returns 1 if positive, -1 if negative, and 0 if input is 0
 	@staticmethod
