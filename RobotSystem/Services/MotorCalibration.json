@@ -2,9 +2,10 @@
 	"motors":[
 		{
 			"name": "j1",
-			"base_val": 90,
-			"min_angle": 0,
-			"max_angle":180,
+			"base_val": 180,
+			"min_angle": 135,
+			"max_angle":300,
+			"min_max_swapped":true,
 			"pin":0
 		},
 		{

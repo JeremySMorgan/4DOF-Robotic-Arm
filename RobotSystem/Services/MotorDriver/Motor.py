@@ -19,27 +19,27 @@ class Motor(object):
 		self.min_angle = minAngle
 		self.max_angle = maxAngle
 
+		self.current_angle = centerValue
 		self.base_val = centerValue
 		self.current_angle = self.base_val
 		self.name = name
 		self.pwm = pwm
 
-	def moveTo(self,d_angle):
-		if d_angle > self.min_angle and d_angle < self.max_angle:
-			self.value = d_angle
+	def move_to_abs_angle(self,d_angle):
+		if d_angle >= self.min_angle and d_angle <= self.max_angle:
+			self.current_angle = d_angle
 
 		elif d_angle >= self.max_angle:
-			self.value = self.max_angle
-			debug_str = "Error: Desired angle of ",str(d_angle)," is greater than max_angle of ",str(self.max_angle)
+			self.current_angle = self.max_angle
+			debug_str = "Error: Desired angle of " + str(d_angle) + " is greater than max_angle of " + str(self.max_angle)
 			self.RobotUtilities.ColorPrinter(self.name, debug_str, 'FAIL')
 
 		elif d_angle <= self.min_angle:
-			self.value = self.min_angle
-			debug_str = "Error: Desired angle of ",str(d_angle)," is less than min_angle of ",str(self.min_angle)
+			self.current_angle = self.min_angle
+			debug_str = "Error: Desired angle of " + str(d_angle) + " is less than min_angle of " + str(self.min_angle)
 			self.RobotUtilities.ColorPrinter(self.name, debug_str, 'FAIL')
 
-		#def scale(OldValue, OldMin, OldMax, NewMin, NewMax):
-		scaled_value = int( self.RobotUtilities.scale( self.value, self.min_angle, self.max_angle,  self.min_pwm, self.max_pwm ))
+		scaled_value = int( self.RobotUtilities.scale( self.current_angle, self.min_angle, self.max_angle,  self.max_pwm, self.min_pwm ))
 
 		if scaled_value < self.min_pwm:
 			self.RobotUtilities.ColorPrinter(self.name, "Error: scaled pwm duty value < min allowable pwm", 'FAIL')
@@ -52,4 +52,10 @@ class Motor(object):
 				self.pwm.setPWM(self.pin_number, 0, scaled_value)
 
 	def move_to_base_position(self):
-		self.moveTo(self.center_value)
+		self.move_to_abs_angle(self.base_val)
+		
+	def set_minimum_angle(self):
+		self.move_to_abs_angle(self.min_angle)
+		
+	def set_maximum_angle(self):
+		self.move_to_abs_angle(self.max_angle)

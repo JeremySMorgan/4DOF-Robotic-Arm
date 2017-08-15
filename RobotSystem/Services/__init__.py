@@ -5,8 +5,6 @@ if RobotUtils.PWM_ENABLED:
     from PWMDriver.pwm import PWM
 
 from MotorDriver.Motor import Motor
-from MotorDriver.Leg import Leg
 from MotionCalculations.MotionCalc import MotionCalc
 
 from MotionControls.MotionControls import MotionController
-from LaserDriver.LaserDriver import LaserDriver
