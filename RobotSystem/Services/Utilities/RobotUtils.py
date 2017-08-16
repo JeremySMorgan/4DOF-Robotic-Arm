@@ -6,6 +6,12 @@ class RobotUtils(object):
     R2                 = 6.5                    # length of junction between middle and leg servos
 
     DEG_TO_RAD        = 0.0174533                # Constant to convert degrees to radians
+    
+    L0 = 1.7
+    L1 = 2.5
+    L2 = 11.45
+    L3 = 9.54
+    L4 = 7.64
 
     SERVO_MIN        = 165                    # Minumum tick count for duty cycle
     SERVO_MAX        = 480                     # Maximum tick count for duty cycle
@@ -13,11 +19,12 @@ class RobotUtils(object):
     DATA_FILE         = "RobotSystem/Services/MotorCalibration.json"     # path to data file
 
     MOTOR_DEBUG     		= False                    # Debug Motors
-    PWM_ENABLED     	   	= True                    # Dictates whether to write to pwm
-    MULTI_THREADING_ENABLE 	= False
+    PWM_ENABLED     	   	= False                    # Dictates whether to write to pwm
     RUNNING_ON_RPI    		= True
 
     AGENDA_UPDATE_SPEED = .1                # Time delay between polls of new agenda
+
+    FK_EPSILON = .00001
 
     COLORS = {                                # Unix codes for special priting
         "HEADER"        :     {"value":'\033[95m', "code":0},

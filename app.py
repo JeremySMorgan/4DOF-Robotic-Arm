@@ -12,23 +12,15 @@ if __name__ == '__main__':
     robot_arm_hypervisor = Hypervisor()
 
     try:
-        #robot_arm_hypervisor.set_base_position()
-        
-        #robot_arm_hypervisor.set_motor_to_angle(1, 270)
-        #robot_arm_hypervisor.set_motor_to_angle(2, 45)
-        #robot_arm_hypervisor.set_motor_to_angle(3, 225)
-        
-        delay = 2
-        motor_num = 4
-        d_angle = 180
-        
-        robot_arm_hypervisor.set_motor_to_min_angle(motor_num)
-        time.sleep(delay)
-        robot_arm_hypervisor.set_motor_to_max_angle(motor_num)
-        time.sleep(delay)
-        robot_arm_hypervisor.set_motor_to_angle(motor_num, d_angle)
-        time.sleep(delay)
-    
+        thetas = [180, 90, 270, 180 ]
+        print
+        print "thetas:", thetas
+        print
+        robot_arm_hypervisor.MotionController.setMotorAngles(thetas)
+        end_coord = robot_arm_hypervisor.MotionController.getXYZfromThetas(thetas)
+        print
+        print "X:",end_coord[0],"Y:",end_coord[1],"Z:",end_coord[2]
+
     except KeyboardInterrupt:
 
         #robot_arm_hypervisor.shutdown()

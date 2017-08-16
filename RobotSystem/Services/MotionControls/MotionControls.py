@@ -8,7 +8,7 @@ import math
 
 class MotionController(object):
 
-    def __init__(self, motors, RobotUtils):
+    def __init__(self, motors, RobotUtils, Kinematics):
 
         self.motors = motors
         self.j1 = motors[0]
@@ -18,14 +18,7 @@ class MotionController(object):
 
         self.RobotUtils = RobotUtils
 
-        # self.MotionCalculator = MotionCalculator
-
-    def stop(self):
-        if not self.stopped:
-            self.move_to_base_position()
-            self.stopped = True
-            self.RobotUtils.ColorPrinter(self.__class__.__name__, 'Stop'
-                    , 'OKBLUE')
+        self.MotionCalculator = Kinematics(RobotUtils)
 
     def reset(self):
         self.j1.move_to_base_position()
@@ -33,16 +26,35 @@ class MotionController(object):
         self.j3.move_to_base_position()
         self.j4.move_to_base_position()
 
+    def setEndEffectorToXY(self,x,y):
+        pass
+    
+    def getXYZfromThetas(self,thetas):
+        xyz = self.MotionCalculator.forward_kinematics_xy(thetas[0],thetas[1],thetas[2],thetas[3])
+        return xyz
+
+    def setMotorAngles(self,thetas):
+        for i in range(4):
+            self.set_motor_to_abs_angle(i+1,thetas[i])
+
     def set_motor_to_abs_angle(self, motor_num, angle):
         motor = self.motors[motor_num - 1]
         motor.move_to_abs_angle(angle)
+        debug_str = 'Set motor ' + motor.name + ' to angle: '+ str(angle)
+        #self.RobotUtils.ColorPrinter(self.__class__.__name__,debug_str, 'OKGREEN')
+
+    def set_motor_to_min(self, motor_num):
         
-    def set_motor_to_min_pwm(self,motor_num):
         motor = self.motors[motor_num - 1]
         motor.set_minimum_pwm()
+
+        status_str = 'Set motor ' + self.motors[motor_num - 1].name + ' to min pwm'
+        #self.RobotUtils.ColorPrinter(self.__class__.__name__, status_str, 'OKGREEN')
         
-    def set_motor_to_max_pwm(self,motor_num):
+    def set_motor_to_max(self, motor_num):
         motor = self.motors[motor_num - 1]
-        motor.set_maximum_pwm
-     
+        motor.set_maximum_pwm()
+
+        status_str = 'Set motor ' + self.motors[motor_num - 1].name + ' to max pwm'
+        self.RobotUtils.ColorPrinter(self.__class__.__name__, status_str, 'OKGREEN')
         
