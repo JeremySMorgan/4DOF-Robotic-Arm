@@ -13,10 +13,10 @@ L2 = 11.45
 L3 = 9.54
 L4 = 7.64
 
-theta1 = 139
-theta2 = 135
-theta3 = 180
-theta4 = 180
+theta1 = 180
+theta2 = 45
+theta3 = 270
+theta4 = 225
 
 j1_x = 0
 j1_y = 0
@@ -56,6 +56,14 @@ ax.plot([x, x + j4_x], [y, y + j4_y],[z, z + j4_z])
 x += j4_x; y += j4_y; z+=j4_z
 
 ax.plot([x, x + j5_x], [y, y + j5_y],[z, z + j5_z])
+
+x += j5_x; y += j5_y; z+=j5_z
+
+pos = [x,y,z]
+print 
+print "thetas: ", [theta1, theta2, theta3, theta4]
+print
+print "End Effector position: ",pos
 
 ax.set_xlabel('X axis')
 ax.set_ylabel('Y axis')
