@@ -12,13 +12,23 @@ if __name__ == '__main__':
     robot_arm_hypervisor = Hypervisor()
 
     try:
-        thetas = [180, 45, 270, 225]
+        xyz_d = [0, -2.5, 20]
         print
-        print "thetas:", thetas
-        print
-        robot_arm_hypervisor.MotionController.setMotorAngles(thetas)
-        end_coord = robot_arm_hypervisor.MotionController.getXYZfromThetas(thetas)
-        print "End effector position: ",end_coord
+        print "desired xyz:", xyz_d
+        print 
+
+        res = robot_arm_hypervisor.MotionController.MotionCalculator.inverse_kinematics( xyz_d )
+
+        if type(res.x) != type(None):
+            thetas_d = list(res.x)
+            print "inv kin solution: ", thetas_d
+            print "calculated location of solution:",robot_arm_hypervisor.MotionController.MotionCalculator.forward_kinematics_xyz(thetas_d)
+        else:
+            print "no solution"
+
+        #robot_arm_hypervisor.MotionController.setMotorAngles(thetas)
+        #end_coord = robot_arm_hypervisor.MotionController.getXYZfromThetas(thetas)
+        #print "End effector position: ",end_coord
 
     except KeyboardInterrupt:
 

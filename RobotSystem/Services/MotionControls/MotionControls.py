@@ -18,7 +18,15 @@ class MotionController(object):
 
         self.RobotUtils = RobotUtils
 
-        self.MotionCalculator = Kinematics(RobotUtils)
+        self.MotionCalculator = Kinematics( RobotUtils, self.get_angle_ranges() )
+
+    def get_angle_ranges(self):
+        min_angs = []
+        max_angs = []
+        for motor in self.motors:
+            min_angs.append(motor.min_angle)
+            max_angs.append(motor.max_angle)
+        return [min_angs,max_angs]
 
     def reset(self):
         self.j1.move_to_base_position()
