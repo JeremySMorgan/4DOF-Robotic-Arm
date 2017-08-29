@@ -17,11 +17,16 @@ if __name__ == '__main__':
         print "desired xyz:", xyz_d
         print 
 
+        start_t = time.time()        
         res = robot_arm_hypervisor.MotionController.MotionCalculator.inverse_kinematics( xyz_d )
+        elapsed_t = time.time() - start_t
+
+        print "inverse k calculated in:", elapsed_t, "seconds"
 
         if type(res.x) != type(None):
             thetas_d = list(res.x)
             print "inv kin solution: ", thetas_d
+
             print "calculated location of solution:",robot_arm_hypervisor.MotionController.MotionCalculator.forward_kinematics_xyz(thetas_d)
         else:
             print "no solution"

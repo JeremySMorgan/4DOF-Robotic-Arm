@@ -24,7 +24,8 @@ class RobotUtils(object):
 
     AGENDA_UPDATE_SPEED = .1                # Time delay between polls of new agenda
 
-    FK_EPSILON = .00001
+    FK_EPSILON = .000001
+    MAX_ALLOWABLE_IK_KIN_ERROR = .01
 
     COLORS = {                                # Unix codes for special priting
         "HEADER"        :     {"value":'\033[95m', "code":0},

@@ -19,6 +19,15 @@ class Kinematics(object):
         y = self.forward_kinematics_y(thetas)
         z = self.forward_kinematics_z(thetas)
 
+        if np.abs(x) <  self.RobotUtils.FK_EPSILON:
+            x = 0
+
+        if np.abs(y) <  self.RobotUtils.FK_EPSILON:
+            y = 0
+
+        if np.abs(z) <  self.RobotUtils.FK_EPSILON:
+            z = 0
+
         return [x,y,z]
         
 
@@ -73,6 +82,27 @@ class Kinematics(object):
         return z
 
 
+    def ik_kin_solution_valid(self,error):
+        if np.abs(error) > self.RobotUtils.MAX_ALLOWABLE_IK_KIN_ERROR:
+            return False    
+        return True
+
+    def ik_kin_solution_error(self,xyz_d,thetas_calculated):
+        
+        xyz_act = self.forward_kinematics_xyz(thetas_calculated)
+
+        if len(xyz_d) != len(xyz_act):
+            raise ValueError("array lengths are not equal")
+            
+        else:
+            cumulative_error = 0
+            for i in range(len(xyz_d)):
+                cumulative_error += np.abs(xyz_d[i] - xyz_act[i])
+            if cumulative_error < self.RobotUtils.MAX_ALLOWABLE_IK_KIN_ERROR:
+                return 0
+            else:
+                return cumulative_error
+
     def inverse_kinematics(self,xyz_d):
         
         xyz_d = tuple(xyz_d)
@@ -89,13 +119,18 @@ class Kinematics(object):
             #print "In inv_kin_cost_function, thetas:",thetas," x:",self.forward_kinematics_x( thetas )," y:",self.forward_kinematics_y( thetas )," z:",self.forward_kinematics_z( thetas ), "cost:",cost
             return cost
 
-
-        ret_val = scipy.optimize.basinhopping ( inv_kin_cost_function, [180,90,180,180] )   
-
-        return ret_val
+        #ret_val = scipy.optimize.basinhopping ( inv_kin_cost_function, [180,90,180,180] )   
+        ret_val = scipy.optimize.minimize ( inv_kin_cost_function, [180,90,180,180] )   
 
 
+        if not ret_val.x is None:            
+            thetas_calc = list(ret_val.x)
+            for i in range(len(thetas_calc)):
+                thetas_calc[i] % 360
+            return thetas_calc
 
+        else:
+            return None
 
 
 
