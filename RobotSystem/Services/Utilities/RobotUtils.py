@@ -16,10 +16,10 @@ class RobotUtils(object):
     SERVO_MIN        = 165                    # Minumum tick count for duty cycle
     SERVO_MAX        = 480                     # Maximum tick count for duty cycle
     SERVO_FREQUENCY    = 50                     # 50 Hz creates a 20 ms period, which servos operate with
-    DATA_FILE         = "RobotSystem/Services/MotorCalibration.json"     # path to data file
+    DATA_FILE         = "/home/pi/Desktop/4DOF-Robotic-Arm/RobotSystem/Services/MotorCalibration.json"#"RobotSystem/Services/MotorCalibration.json"     # path to data file
 
     MOTOR_DEBUG     		= False                    # Debug Motors
-    PWM_ENABLED     	   	= False                    # Dictates whether to write to pwm
+    PWM_ENABLED     	   	= True                    # Dictates whether to write to pwm
     RUNNING_ON_RPI    		= True
 
     AGENDA_UPDATE_SPEED = .1                # Time delay between polls of new agenda

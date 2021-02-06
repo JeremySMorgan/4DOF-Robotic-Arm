@@ -41,7 +41,7 @@ class MotionController(object):
         xyz = self.MotionCalculator.forward_kinematics_xy(thetas[0],thetas[1],thetas[2],thetas[3])
         return xyz
 
-    def setMotorAngles(self,thetas):
+    def set_motor_angles(self,thetas):
         for i in range(4):
             self.set_motor_to_abs_angle(i+1,thetas[i])
 
@@ -57,7 +57,7 @@ class MotionController(object):
         motor.set_minimum_pwm()
 
         status_str = 'Set motor ' + self.motors[motor_num - 1].name + ' to min pwm'
-        #self.RobotUtils.ColorPrinter(self.__class__.__name__, status_str, 'OKGREEN')
+        self.RobotUtils.ColorPrinter(self.__class__.__name__, status_str, 'OKGREEN')
         
     def set_motor_to_max(self, motor_num):
         motor = self.motors[motor_num - 1]

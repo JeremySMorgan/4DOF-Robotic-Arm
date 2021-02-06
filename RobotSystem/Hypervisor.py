@@ -37,7 +37,6 @@ class Hypervisor(object):
     def testSuite(self, operation):
         pass
 
-
     def create_motor_drivers(self):
         with open(self.data_file_name) as data_file:
             data = json.load(data_file)
